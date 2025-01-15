@@ -1,0 +1,47 @@
+<div class="container">
+    <form class="form-container" [formGroup]="quoteCalculatorFormGroup" (ngSubmit)="onSubmit()">
+        <h2 class="form-header">Quote Calculator</h2>
+        <div class="form-group">
+            <label class="form-label" for="productType">Product type</label>
+            <br />
+            <select formControlName="productType">
+                <option *ngFor="let option of productTypeOptions" [value]="option.value">
+                    {{ option.label }}
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <app-slider [sliderValue]="amountRequiredSliderValue" [isCurrency]="true" [minValue]="1" [maxValue]="15000" [fieldLabelValue]="amountRequiredSliderLabel" 
+                (sliderValueChange)="onAmountRequiredSliderValueChange($event)"></app-slider>
+            <app-slider [sliderValue]="termSliderValue"  [minValue]="1" [maxValue]="12" [fieldLabelValue]="termSliderLabel" 
+                (sliderValueChange)="onTermSliderValueChange($event)"></app-slider>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="title">Title</label>
+            <br />
+            <select formControlName="title"> 
+                <option *ngFor="let option of titleOptions" [value]="option.value">
+                    {{ option.label }}
+                </option> 
+            </select> 
+            <input type="text" placeholder="First name" formControlName="firstName"> 
+            <input type="text" placeholder="Last name" formControlName="lastName">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="dateOfBirth">Date of birth</label>
+            <br />
+            <input type="date" placeholder="Date of birth" formControlName="dateOfBirth" />
+        </div>
+
+        <div class="form-group"> 
+            <input type="email" placeholder="Your email" formControlName="email"> 
+            <input type="tel" placeholder="Mobile number" formControlName="mobile">
+        </div>
+
+        <button type="submit" class="submit-form-btn">Calculate Quote</button>  
+        <p class="note">Quote does not affect your credit score
+    </form>
+</div>

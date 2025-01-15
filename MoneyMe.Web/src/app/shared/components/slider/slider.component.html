@@ -1,0 +1,22 @@
+<div class="slider-container">
+    <div class="slider-value" *ngIf="isCurrency; else defaultDisplayValueFormat" id="sliderValue">{{currencyPipe.transform(sliderValue)}}</div> 
+    <ng-template #defaultDisplayValueFormat>
+        <div class="slider-value" id="sliderValue">{{sliderValue}}</div>
+    </ng-template>
+    <input type="range" [min]="minValue" [max]="maxValue" value="{{sliderValue}}" class="slider" (input)="updateValue($event)" id="myRange"> 
+    <div>
+        <span class="slider-labels" *ngIf="isCurrency; else defaultDisplayLabelFormat">
+            <span>{{currencyPipe.transform(minValue)}}</span>
+            <span>{{fieldLabelValue}}</span>
+            <span>{{currencyPipe.transform(maxValue)}}</span>
+        </span>
+        <ng-template #defaultDisplayLabelFormat>
+            <span class="slider-labels">
+                <span>{{minValue}}</span>
+                <span>{{fieldLabelValue}}</span>
+                <span>{{maxValue}}</span>
+            </span>
+        </ng-template>
+    </div>
+</div>
+  

@@ -1,0 +1,87 @@
+<div class="container">
+    <form class="form-container" [formGroup]="applyLoanApplicationFormGroup" (ngSubmit)="onSubmit()">
+        <h2 class="form-header">Your Quote</h2>
+
+        <div *ngIf="isBasicDetailsInEditMode; else defaultBasicDetailsDisplay">
+            <div class="form-group"> 
+                <div class="summary-container-field">
+                    <h2 class="text-2xl">Your Information</h2> 
+                    <button type="button" (click)="editBasicDetailsClick()" class="underline">{{ basicDetailsEditButtonLabel }}</button>
+                </div>
+                <div class="summary-container-field">
+                    <span>Name: </span> 
+                    <input class="w-60" type="text" placeholder="First name" formControlName="firstName"> 
+                    <input type="text" placeholder="Last name" formControlName="lastName">
+                </div>
+                <div class="summary-container-field">
+                    <span>Date of Birth: </span> 
+                    <input type="date" placeholder="Date of Birth" formControlName="dateOfBirth">
+                </div>
+                <div class="summary-container-field">
+                    <span>Mobile: </span> 
+                    <input type="tel" placeholder="Mobile number" formControlName="mobile">
+                </div>
+                <div class="summary-container-field">
+                    <span>Email: </span>
+                    <input type="email" placeholder="Your email" formControlName="email"> 
+                </div>
+            </div>
+        </div>
+        <ng-template #defaultBasicDetailsDisplay>
+            <div class="form-group"> 
+                <div class="summary-container-field">
+                    <h2 class="text-2xl">Your Information</h2> 
+                    <button type="button" (click)="editBasicDetailsClick()" class="underline">{{ basicDetailsEditButtonLabel }}</button>
+                </div>
+                <div class="summary-container-field">
+                    <span>Name: </span> 
+                    <span>{{ applyLoanApplicationFormGroup.value.firstName + ' ' + applyLoanApplicationFormGroup.value.lastName }}</span>
+                </div>
+                <div class="summary-container-field">   
+                    <span>Date of Birth: </span> 
+                    <span>{{ applyLoanApplicationFormGroup.value.dateOfBirth }}</span>
+                </div>
+                <div class="summary-container-field">   
+                    <span>Mobile: </span> 
+                    <span>{{ applyLoanApplicationFormGroup.value.mobile }}</span>
+                </div>
+                <div class="summary-container-field">
+                    <span>Email: </span> 
+                    <span>{{ applyLoanApplicationFormGroup.value.email }}</span>
+                </div>
+            </div>
+        </ng-template>
+
+        <div *ngIf="isFinanceDetailsInEditMode; else defaultFinanceDetailsDisplay">
+            <div class="form-group"> 
+                <div class="summary-container-field">
+                    <h2 class="text-2xl">Finance Details</h2> 
+                    <button type="button" (click)="editFinanceDetailsClick()" class="underline">{{ financeDetailsEditButtonLabel }}</button>
+                </div>           
+                <app-slider [sliderValue]="applyLoanApplicationFormGroup.value.amountRequired" [isCurrency]="true" [minValue]="1" [maxValue]="15000" [fieldLabelValue]="amountRequiredSliderLabel" 
+                    (sliderValueChange)="onAmountRequiredSliderValueChange($event)"></app-slider>
+                <app-slider [sliderValue]="applyLoanApplicationFormGroup.value.term"  [minValue]="termSliderMinValue" [maxValue]="12" [fieldLabelValue]="termSliderLabel" 
+                    (sliderValueChange)="onTermSliderValueChange($event)"></app-slider>
+            </div>
+        </div>
+        <ng-template #defaultFinanceDetailsDisplay>
+            <div class="form-group">
+                <div class="summary-container-field">
+                    <h2 class="text-2xl">Finance Details</h2> 
+                    <button type="button" class="underline" (click)="editFinanceDetailsClick()">{{ financeDetailsEditButtonLabel }}</button>
+                </div>
+                <div class="summary-container-field">
+                    <span>Finance amount: </span> 
+                    <span>{{ currencyPipe.transform(applyLoanApplicationFormGroup.value.amountRequired) }} over {{ applyLoanApplicationFormGroup.value.term }} months</span>
+                </div>
+                <div class="summary-container-field">
+                    <span>Repayments from: </span> 
+                    <span>{{ applyLoanApplicationFormGroup.value.monthlyPaymentAmount }} Monthly</span>
+                </div>
+            </div>
+        </ng-template>        
+
+        <button type="submit" class="submit-form-btn">Apply Now</button>
+        <p class="note">Total repayments {{ currencyPipe.transform(repaymentAmount) }}, made up of an establishment fee of {{ currencyPipe.transform(establishmentFee) }}, interest of {{ currencyPipe.transform(interestAmount) }}. The repayment amount is based on the variables selected, is subject to our assessment and suitability, and other important terms and conditions apply.</p>
+    </form>
+</div>
