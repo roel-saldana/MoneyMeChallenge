@@ -28,6 +28,7 @@ namespace MoneyMe.Infrastructure.Utils
                         PrincipalAmount = loanApplication.AmountRequired,
                         Term = loanApplication.Term
                     };
+                    loanApplication.Term = product.Term;
                     loanApplication.RepaymentAmount = product.CalculateRepaymentAmount();
                     loanApplication.MonthlyPaymentAmount = product.MonthlyPaymentAmount;
                     break;
